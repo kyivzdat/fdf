@@ -17,7 +17,28 @@ static void	add_list(t_all *all, t_point *point, int x)
 	new->leny = 0;
 }
 
-int	get_data(t_all *all, char *line, int y, int len)
+static int	check_hex(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line[i] != '0' || line[i + 1] != 'x')
+		return (1);
+	i += 2;
+	while (line[i] && line[i] != ' ')
+	{
+		if (!(line[i] >= '0' && line[i] <= '9') &&
+		(!(line[i] >= 'a' && line[i] <= 'f')) &&
+		(!(line[i] >= 'A' && line[i] <= 'F')))
+			return (1);
+		i++;
+	}
+	if ((i - 2) > 6)
+		return (1);
+	return (0);
+}
+
+int			get_data(t_all *all, char *line, int y, int len)
 {
 	int	i;
 	int	x;
@@ -35,8 +56,7 @@ int	get_data(t_all *all, char *line, int y, int len)
 		// printf("line[i] = !%c!\n", line[i]);
 		if (line[i] == ',')
 		{
-			i++;
-			if (line[i] != '0' || line[i + 1] != 'x')
+			if (check_hex(&line[++i]))
 				return (1);
 			while (line[i] != ' ')
 				i++;
@@ -62,7 +82,7 @@ int	get_data(t_all *all, char *line, int y, int len)
 	return (0);
 }
 
-int		parse_map(t_all *all, char *file)
+int			parse_map(t_all *all, char *file)
 {
 	int		fd;
 	char	*line;
@@ -81,7 +101,8 @@ int		parse_map(t_all *all, char *file)
 			free(line);
 			return (1);
 		}
-		get_data(all, line, y, len);
+		if (get_data(all, line, y, len))
+			return (1);
 		free(line);
 		y++;
 	}
