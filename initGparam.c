@@ -45,15 +45,15 @@ static void	noIsoExtrPoints(t_all *all)
 		p = list->point;
 		while (p)
 		{
-			tmp = noIsoCoord(all, p->x, 1);
-			point = noIsoCoord(all, all->gnrl.maxPointX->x, 1);
+			tmp = no_iso_coord(all, p->x, 1);
+			point = no_iso_coord(all, all->gnrl.maxPointX->x, 1);
 			all->gnrl.maxPointX = (point < tmp) ? p : all->gnrl.maxPointX;
-			point = noIsoCoord(all, all->gnrl.minPointX->x, 1);
+			point = no_iso_coord(all, all->gnrl.minPointX->x, 1);
 			all->gnrl.minPointX = (point > tmp) ? p : all->gnrl.minPointX;
-			tmp = noIsoCoord(all, p->y, 0);
-			point = noIsoCoord(all, all->gnrl.maxPointY->y, 0);
+			tmp = no_iso_coord(all, p->y, 0);
+			point = no_iso_coord(all, all->gnrl.maxPointY->y, 0);
 			all->gnrl.maxPointY = (point < tmp) ? p : all->gnrl.maxPointY;
-			point = noIsoCoord(all, all->gnrl.minPointY->y, 0);
+			point = no_iso_coord(all, all->gnrl.minPointY->y, 0);
 			all->gnrl.minPointY = (point > tmp) ? p : all->gnrl.minPointY;
 			p = p->next;
 		}
@@ -90,7 +90,7 @@ static void	getExtremePoints(t_all *all, t_lst *list)
 	}
 }
 
-void	initGparam(t_all *all)
+void	init_g_param(t_all *all)
 {
 	t_lst	*list;
 
