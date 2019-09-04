@@ -69,8 +69,8 @@ int		main(int argc, char **argv)
 	t_general gnrl;
 
 	all.gnrl = gnrl;
-	all.gnrl.winSize_x = 1000;
-	all.gnrl.winSize_y = 1000;
+	all.gnrl.winSize_x = WIN_LENGTH;
+	all.gnrl.winSize_y = WIN_HIGHT;
 	all.mlx_ptr = mlx_init();
 	all.win_ptr = mlx_new_window(all.mlx_ptr, all.gnrl.winSize_x, all.gnrl.winSize_y, "qwe");
 	all.list = NULL;

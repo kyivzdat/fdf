@@ -24,10 +24,13 @@ static void	initGscale(t_all *all)
 {
 	int	y1;
 	int	y2;
+	int	min_value;
 
+	min_value = (all->gnrl.winSize_x < all->gnrl.winSize_y) ?
+	all->gnrl.winSize_x : all->gnrl.winSize_y;
 	y1 = coord_y(all, all->gnrl.maxPointY->x, all->gnrl.maxPointY->y, all->gnrl.maxPointY->z);
 	y2 = coord_y(all, all->gnrl.minPointY->x, all->gnrl.minPointY->y, all->gnrl.minPointY->z);
-	all->gnrl.scale = (all->gnrl.winSize_x / 2) / (y1 - y2);
+	all->gnrl.scale = (min_value / 2) / (y1 - y2);
 	if (all->gnrl.proection == 0)
 		all->gnrl.scale = all->gnrl.winSize_x / 2 / all->list->lenx;
 }
