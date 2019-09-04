@@ -3,6 +3,7 @@ SRC :=	main.c \
 			parse.c \
 			point.c \
 			initGparam.c \
+			def_coordinate.c \
 
 all:
 	gcc -lmlx -framework OpenGL -framework AppKit $(SRC) libft/libft.a

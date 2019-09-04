@@ -84,6 +84,7 @@ void	draw_line(t_all *all, t_point *p1, t_point *p2);
 int		coord_x(t_all *all, int x, int y);
 int		coord_y(t_all *all, int x, int y, int z);
 int		noIsoCoord(t_all *all, int n, int x);
-
+void	isoDraw(t_all *all, t_point *p1, t_point *p2, t_draw *draw);
+void	noIsoDraw(t_all *all, t_point *p1, t_point *p2, t_draw *draw);
 
 #endif
