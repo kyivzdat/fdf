@@ -5,8 +5,8 @@ void	key_hook_wasd(int key, t_all *all)
 {
 	if (key == 124)
 	{
-		if ((coord_x(all, all->gnrl.minPointX->x, all->gnrl.minPointX->y) < 1000 && all->gnrl.proection == 1) || 
-		(no_iso_coord(all, all->gnrl.minPointX->x, 1) < 1000 && all->gnrl.proection == 0))
+		if ((coord_x(all, all->gnrl.minPointX->x, all->gnrl.minPointX->y) < all->gnrl.winSize_x && all->gnrl.proection == 1) || 
+		(no_iso_coord(all, all->gnrl.minPointX->x, 1) < all->gnrl.winSize_x && all->gnrl.proection == 0))
 			all->gnrl.midx += 10;
 	}
 	else if (key == 123)
@@ -23,8 +23,8 @@ void	key_hook_wasd(int key, t_all *all)
 	}
 	else if (key == 125)
 	{
-		if ((coord_y(all, all->gnrl.minPointY->x, all->gnrl.minPointY->y, all->gnrl.minPointY->z) < 1000
-		&& all->gnrl.proection == 1) || (no_iso_coord(all, all->gnrl.minPointY->y, 0) < 1000 && all->gnrl.proection == 0))
+		if ((coord_y(all, all->gnrl.minPointY->x, all->gnrl.minPointY->y, all->gnrl.minPointY->z) < all->gnrl.winSize_y
+		&& all->gnrl.proection == 1) || (no_iso_coord(all, all->gnrl.minPointY->y, 0) < all->gnrl.winSize_y && all->gnrl.proection == 0))
 			all->gnrl.midy += 10;
 	}
 }

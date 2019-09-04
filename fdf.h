@@ -14,8 +14,8 @@
 # define CYAN		"\x1b[36m"
 # define RESET		"\x1b[0m"
 
-# define WIN_LENGTH 150
-# define WIN_HIGHT 1000
+# define WIN_LENGTH 1000
+# define WIN_HIGHT 150
 
 typedef struct  s_point
 {
