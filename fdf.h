@@ -77,9 +77,13 @@ void	point_cur_print(t_point *point);
 int		get_data(t_all *all, char *line, int y, int len);
 int		parse_map(t_all *all, char *file);
 
+void	initGparam(t_all *all);
+
 void	draw_line(t_all *all, t_point *p1, t_point *p2);
 
-int	 	 coord_x(t_all *all, int x, int y);
-int 	 coord_y(t_all *all, int x, int y, int z);
+int		coord_x(t_all *all, int x, int y);
+int		coord_y(t_all *all, int x, int y, int z);
+int		noIsoCoord(t_all *all, int n, int x);
+
 
 #endif

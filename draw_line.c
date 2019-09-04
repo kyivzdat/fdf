@@ -10,6 +10,16 @@ int  coord_y(t_all *all, int x, int y, int z)
 	return ((int)(all->gnrl.midy + (float)((-(z) * all->gnrl.scale / 2)) + (float)(all->gnrl.scale * (x + y) * sin(0.523599))));
 }
 
+
+int			noIsoCoord(t_all *all, int n, int x)
+{
+	if (x)
+		return (all->gnrl.midx + all->gnrl.scale * n);
+	else
+		return (all->gnrl.midy + all->gnrl.scale * n);
+
+}
+
 void	iso(t_all *all, t_point *p1, t_point *p2, t_draw *draw)
 {
 	draw->x0 = coord_x(all, p1->x, p1->y);
