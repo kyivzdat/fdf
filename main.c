@@ -77,15 +77,15 @@ static void	initGscale(t_all *all)
 		all->gnrl.scale = all->gnrl.winSize_x / 2 / all->list->lenx;
 }
 
-int			noIsoCoord_x(t_all *all, int n)
+int			noIsoCoord(t_all *all, int n, int x)
 {
-	return (all->gnrl.midx + all->gnrl.scale * n);
+	if (x)
+		return (all->gnrl.midx + all->gnrl.scale * n);
+	else
+		return (all->gnrl.midy + all->gnrl.scale * n);
+
 }
 
-int			noIsoCoord_y(t_all *all, int n)
-{
-	return (all->gnrl.midy + all->gnrl.scale * n);
-}
 
 void	noIsoExtrPoints(t_all *all)
 {
@@ -100,15 +100,15 @@ void	noIsoExtrPoints(t_all *all)
 		p = list->point;
 		while (p)
 		{
-			tmp = noIsoCoord_x(all, p->x);
-			point = noIsoCoord_x(all, all->gnrl.maxPointX->x);
+			tmp = noIsoCoord(all, p->x, 1);
+			point = noIsoCoord(all, all->gnrl.maxPointX->x, 1);
 			all->gnrl.maxPointX = (point < tmp) ? p : all->gnrl.maxPointX;
-			point = noIsoCoord_x(all, all->gnrl.minPointX->x);
+			point = noIsoCoord(all, all->gnrl.minPointX->x, 1);
 			all->gnrl.minPointX = (point > tmp) ? p : all->gnrl.minPointX;
-			tmp = noIsoCoord_y(all, p->y);
-			point = noIsoCoord_y(all, all->gnrl.maxPointY->y);
+			tmp = noIsoCoord(all, p->y, 0);
+			point = noIsoCoord(all, all->gnrl.maxPointY->y, 0);
 			all->gnrl.maxPointY = (point < tmp) ? p : all->gnrl.maxPointY;
-			point = noIsoCoord_y(all, all->gnrl.minPointY->y);
+			point = noIsoCoord(all, all->gnrl.minPointY->y, 0);
 			all->gnrl.minPointY = (point > tmp) ? p : all->gnrl.minPointY;
 			p = p->next;
 		}
@@ -184,25 +184,25 @@ int	key_hook(int key, void *param)
 	if (key == 124)
 	{
 		if ((coord_x(all, all->gnrl.maxPointX->x, all->gnrl.maxPointX->y) + 10 < 1000 && all->gnrl.proection == 1) || 
-		(noIsoCoord_x(all, all->gnrl.maxPointX->x) + 10 < 1000 && all->gnrl.proection == 0))
+		(noIsoCoord(all, all->gnrl.maxPointX->x, 1) + 10 < 1000 && all->gnrl.proection == 0))
 			all->gnrl.midx += 10;
 	}
 	else if (key == 123)
 	{
 		if ((coord_x(all, all->gnrl.minPointX->x, all->gnrl.minPointX->y) - 10 > 0 && all->gnrl.proection == 1) || 
-		(noIsoCoord_x(all, all->gnrl.minPointX->x) - 10 > 0 && all->gnrl.proection == 0))
+		(noIsoCoord(all, all->gnrl.minPointX->x, 1) - 10 > 0 && all->gnrl.proection == 0))
 			all->gnrl.midx -= 10;
 	}
 	else if (key == 126)
 	{
 		if ((coord_y(all, all->gnrl.minPointY->x, all->gnrl.minPointY->y, all->gnrl.minPointY->z) - 10 > 0
-		&& all->gnrl.proection == 1) || (noIsoCoord_y(all, all->gnrl.minPointY->y) - 10 > 0 && all->gnrl.proection == 0))
+		&& all->gnrl.proection == 1) || (noIsoCoord(all, all->gnrl.minPointY->y, 0) - 10 > 0 && all->gnrl.proection == 0))
 			all->gnrl.midy -= 10;
 	}
 	else if (key == 125)
 	{
 		if ((coord_y(all, all->gnrl.maxPointY->x, all->gnrl.maxPointY->y, all->gnrl.maxPointY->z) + 10 < 1000
-		&& all->gnrl.proection == 1) || (noIsoCoord_y(all, all->gnrl.maxPointY->y) + 10 < 1000 && all->gnrl.proection == 0))
+		&& all->gnrl.proection == 1) || (noIsoCoord(all, all->gnrl.maxPointY->y, 0) + 10 < 1000 && all->gnrl.proection == 0))
 			all->gnrl.midy += 10;
 	}
 	else if (key == 69 || key == 24)
@@ -212,8 +212,8 @@ int	key_hook(int key, void *param)
 		coord_y(all, all->gnrl.minPointY->x, all->gnrl.minPointY->y, all->gnrl.minPointY->z) - 25 > 0 &&
 		coord_y(all, all->gnrl.maxPointY->x, all->gnrl.maxPointY->y, all->gnrl.maxPointY->z) + 25 < 1000 &&
 		all->gnrl.proection == 1) ||
-		(noIsoCoord_x(all, all->gnrl.maxPointX->x) + 40 < 1000 &&
-		noIsoCoord_y(all, all->gnrl.maxPointY->y) + 40 < 1000 && all->gnrl.proection == 0))
+		(noIsoCoord(all, all->gnrl.maxPointX->x, 1) + 40 < 1000 &&
+		noIsoCoord(all, all->gnrl.maxPointY->y, 0) + 40 < 1000 && all->gnrl.proection == 0))
 			all->gnrl.scale += 2;
 	}
 	else if (key == 78 || key == 27)
