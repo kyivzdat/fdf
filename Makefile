@@ -1,12 +1,43 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vpalamar <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/09/05 17:35:54 by vpalamar          #+#    #+#              #
+#    Updated: 2019/09/05 17:35:58 by vpalamar         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = fdf
+
+LIBDIR = ./libft
+
+LIB = $(LIBDIR)/libft.a
+
 SRC :=	main.c \
 			draw_line.c \
-			parse.c \
-			point.c \
-			initGparam.c \
+			get_data.c \
+			point_list.c \
+			init_g_param.c \
 			def_coordinate.c \
+			hook.c \
 
-all:
-	gcc -lmlx -framework OpenGL -framework AppKit $(SRC) libft/libft.a
+O_FILES := $(SRC:.c=.o)
 
-flags:
-	gcc -Wall -Wextra -Werror -lmlx-framework OpenGL -framework AppKit $(SRC)
+all: $(NAME)
+$(NAME): $(O_FILES)
+	$(MAKE) -C $(LIBDIR)
+	gcc -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit $(SRC) $(LIB) -o $(NAME)
+
+%.o: %.c filler.h
+	gcc -Wall -Wextra -Werror -c $< -o $@
+
+clean:
+	rm -f $(O_FILES)
+	$(MAKE) clean -C $(LIBDIR)
+
+fclean: clean
+	rm -f $(NAME)
+	$(MAKE) fclean -C $(LIBDIR)

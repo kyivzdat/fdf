@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   def_coordinate.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vpalamar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/05 15:23:03 by vpalamar          #+#    #+#             */
+/*   Updated: 2019/09/05 15:23:04 by vpalamar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int		coord_x(t_all *all, int x, int y)
@@ -8,7 +20,8 @@ int		coord_x(t_all *all, int x, int y)
 
 int		coord_y(t_all *all, int x, int y, int z)
 {
-	return ((int)(all->gnrl.midy + (float)((-(z) * all->gnrl.scale / 2)) +
+	return ((int)(all->gnrl.midy +
+	(float)((-(z * all->gnrl.height) * all->gnrl.scale / 4)) +
 	(float)(all->gnrl.scale * (x + y) * sin(0.523599))));
 }
 

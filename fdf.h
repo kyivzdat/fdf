@@ -15,7 +15,7 @@
 # define RESET		"\x1b[0m"
 
 # define WIN_LENGTH 1000
-# define WIN_HIGHT 1000
+# define WIN_HIGHT	1000
 
 # define CLR_WHITE		0xffffff
 # define CLR_RED		0xff0000
@@ -27,8 +27,6 @@
 # define CLR_TIFFANY	0x00b3b3
 # define CLR_CHOCOLATE	0x805500
 # define CLR_TEA_GREEN	0xccffcc
-
-
 
 
 typedef struct  s_point
@@ -68,6 +66,7 @@ typedef	struct	s_general
 	int			midy;
 	int			scale;
 	int			proection;
+	int			height;
 	int			color;
 	int			winSize_x;
 	int			winSize_y;
@@ -91,9 +90,9 @@ t_point	*point_init(int y, int z);
 void	point_add(t_point *point, int y, int z);
 void	list_print(t_all *all);
 void	point_cur_print(t_point *point);
+int			add_list(t_all *all, t_point *point, int x);
 
 int		get_data(t_all *all, char *line, int y, int len);
-int		parse_map(t_all *all, char *file);
 
 void	init_g_param(t_all *all);
 
@@ -105,5 +104,11 @@ int		coord_y(t_all *all, int x, int y, int z);
 int		no_iso_coord(t_all *all, int n, int x);
 void	iso_draw(t_all *all, t_point *p1, t_point *p2, t_draw *draw);
 void	no_iso_draw(t_all *all, t_point *p1, t_point *p2, t_draw *draw);
+
+void		free_list(t_all *all);
+int			point_free(t_point *point);
+
+int			key_hook(int key, void *param);
+int 		close_wnd(void *param);
 
 #endif
