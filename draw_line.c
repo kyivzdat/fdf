@@ -18,7 +18,7 @@ static void	draw_line1(t_all *all, t_draw *draw)
 			y += draw->signa;
 		}
 		x -= draw->signb;
-		mlx_pixel_put(all->mlx_ptr, all->win_ptr, x, y, 0xe6e6fa);
+		mlx_pixel_put(all->mlx_ptr, all->win_ptr, x, y, all->gnrl.color);
 	} 
 }
 
@@ -40,7 +40,7 @@ static void	draw_line2(t_all *all, t_draw *draw)
 			x -= draw->signb;
 		}
 		y += draw->signa;
-		mlx_pixel_put(all->mlx_ptr, all->win_ptr, x, y, 0xe6e6fa);
+		mlx_pixel_put(all->mlx_ptr, all->win_ptr, x, y, all->gnrl.color);
 	}
 }
 
@@ -58,7 +58,7 @@ void	draw_line(t_all *all, t_point *p1, t_point *p2)
 	draw.sign = (abs(draw.a) > abs(draw.b)) ? 1 : -1;
 	draw.signa = (draw.a < 0) ? -1 : 1;
 	draw.signb = (draw.b < 0) ? -1 : 1;
-	mlx_pixel_put(all->mlx_ptr, all->win_ptr, draw.x0, draw.y0, 0xe6e6fa);
+	mlx_pixel_put(all->mlx_ptr, all->win_ptr, draw.x0, draw.y0, all->gnrl.color);
 	if (draw.sign == -1) 
 		draw_line1(all, &draw);
 	else
