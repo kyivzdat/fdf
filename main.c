@@ -19,12 +19,15 @@ int		parse_map(t_all *all, char *file)
 	int		y;
 	int		len;
 
-	fd = open(file, O_RDONLY);
+	if ((fd = open(file, O_RDONLY)) <= 0)
+		return (1);
 	line = NULL;
 	y = 0;
+		printf("fd = %d\n", fd);
 	while (get_next_line(fd, &line))
 	{
 		len = ft_strlen(line);
+		printf("len = %d\n", len);
 		if (len == 0 || get_data(all, line, y, len))
 		{
 			free(line);
@@ -69,7 +72,7 @@ int		main(int argc, char **argv)
 {
 	t_all	all;
 
-	if (init_start_param(&all))
+	if (init_start_param(&all) || argc != 2)
 	{
 		write(1, "ERROR\n", 6);
 		return (0);
@@ -86,7 +89,7 @@ int		main(int argc, char **argv)
 		draw(&all);
 		mlx_hook(all.win_ptr, 2, 0, key_hook, (void *)&all);
 		mlx_hook(all.win_ptr, 17, 0, close_wnd, (void *)&all);
+		mlx_loop(all.mlx_ptr);
 	}
-	mlx_loop(all.mlx_ptr);
 	return (0);
 }
