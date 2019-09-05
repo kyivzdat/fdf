@@ -15,7 +15,21 @@
 # define RESET		"\x1b[0m"
 
 # define WIN_LENGTH 1000
-# define WIN_HIGHT 150
+# define WIN_HIGHT 1000
+
+# define CLR_WHITE		0xffffff
+# define CLR_RED		0xff0000
+# define CLR_BLUE		0x0000ff
+# define CLR_GREEN		0x00ff00
+# define CLR_CYAN		0x00ffff
+# define CLR_PURPLE		0xb300b3
+# define CLR_YELLOW		0xffff33
+# define CLR_TIFFANY	0x00b3b3
+# define CLR_CHOCOLATE	0x805500
+# define CLR_TEA_GREEN	0xccffcc
+
+
+
 
 typedef struct  s_point
 {
@@ -54,6 +68,7 @@ typedef	struct	s_general
 	int			midy;
 	int			scale;
 	int			proection;
+	int			color;
 	int			winSize_x;
 	int			winSize_y;
 	t_point		*maxPointX;

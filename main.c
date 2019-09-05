@@ -29,6 +29,30 @@ void	key_hook_wasd(int key, t_all *all)
 	}
 }
 
+void	key_hook_color(int key, t_all *all)
+{
+	if (key == 82)
+		all->gnrl.color = CLR_WHITE;
+	else if (key == 83)
+		all->gnrl.color = CLR_RED;
+	else if (key == 84)
+		all->gnrl.color = CLR_BLUE;
+	else if (key == 85)
+		all->gnrl.color = CLR_GREEN;
+	else if (key == 86)
+		all->gnrl.color = CLR_CYAN;
+	else if (key == 87)
+		all->gnrl.color = CLR_PURPLE;
+	else if (key == 88)
+		all->gnrl.color = CLR_YELLOW;
+	else if (key == 89)
+		all->gnrl.color = CLR_TIFFANY;
+	else if (key == 91)
+		all->gnrl.color = CLR_CHOCOLATE;
+	else if (key == 92)
+		all->gnrl.color = CLR_TEA_GREEN;
+}
+
 int	key_hook(int key, void *param)
 {
 	t_all	*all;
@@ -50,8 +74,10 @@ int	key_hook(int key, void *param)
 			all->gnrl.scale += 2;
 	else if (key == 78 || key == 27)
 			all->gnrl.scale -= 2;
-	else
+	else if (key == 123 || key == 124 || key == 125 || key == 126)
 		key_hook_wasd(key, all);
+	else if (key == 65 || (key >= 82 && key <= 89) || key == 91 || key == 92)
+		key_hook_color(key, all);
 	
 	draw(all);
 	return (0);
@@ -77,6 +103,7 @@ int		main(int argc, char **argv)
 	all.gnrl.midx = 300;
 	all.gnrl.midy = 150;
 	all.gnrl.proection = 1;
+	all.gnrl.color = CLR_WHITE;
 
 	int	test = 0xFE;
 	// printf("test = %d\n", test);
