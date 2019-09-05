@@ -20,6 +20,29 @@ static int	add_list(t_all *all, t_point *point, int x)
 	return (0);
 }
 
+void		free_list(t_all *all)
+{
+	t_point	*p;
+	t_point	*free_p;
+	t_lst	*list;
+	t_lst	*free_list;
+
+	list = all->list;
+	while (list)
+	{
+		p = list->point;
+		while (p)
+		{
+			free_p = p;
+			p = p->next;
+			free(free_p);
+		}
+		free_list = list;
+		list = list->next;
+		free (free_list);
+	}
+}
+
 static int	check_hex(char *line)
 {
 	int	i;
@@ -39,6 +62,18 @@ static int	check_hex(char *line)
 	if ((i - 2) > 6)
 		return (1);
 	return (0);
+}
+
+void		free_point(t_point *point)
+{
+	t_point		*free_point;
+
+	while (point)
+	{
+		free_point = point;
+		point = point->next;
+		free(free_point);
+	}
 }
 
 int			get_data(t_all *all, char *line, int y, int len)
@@ -61,21 +96,27 @@ int			get_data(t_all *all, char *line, int y, int len)
 		if (line[i] == ',')
 		{
 			if (check_hex(&line[++i]))
+			{
+				free_point(point);
 				return (1);
+			}
 			while (i < len && line[i] != ' ')
 				i++;
+		}
+		while (i < len && (line[i] < '0' || line[i] > '9') && line[i] != '-')
+		{
+			if (line[i] != ' ')
+			{
+				free_point(point);
+				return (1);
+			}
+			i++;
 		}
 		if (!point)
 			point = point_init(y, z);
 		else
 			point_add(point, y, z);
 		x++;
-		while (i < len && (line[i] < '0' || line[i] > '9') && line[i] != '-')
-		{
-			if (line[i] != ' ')
-				return (1);
-			i++;
-		}
 	}
 	if (!all->list)
 	{
@@ -88,7 +129,10 @@ int			get_data(t_all *all, char *line, int y, int len)
 	else
 	{
 		if (add_list(all, point, x))
+		{
+			free_point(point);
 			return (1);
+		}
 	}
 	return (0);
 }
@@ -105,7 +149,7 @@ int			parse_map(t_all *all, char *file)
 	y = 0;
 	while (get_next_line(fd, &line))
 	{
-		// printf("%s\n", line);
+		printf("%s\n", line);
 		len = ft_strlen(line);
 		if (len == 0)
 		{
@@ -113,7 +157,10 @@ int			parse_map(t_all *all, char *file)
 			return (1);
 		}
 		if (get_data(all, line, y, len))
+		{
+			free(line);
 			return (1);
+		}
 		free(line);
 		y++;
 	}
