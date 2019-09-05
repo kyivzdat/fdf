@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-static void	add_list(t_all *all, t_point *point, int x)
+static int	add_list(t_all *all, t_point *point, int x)
 {
 	t_lst	*list;
 	t_lst	*new;
@@ -8,6 +8,8 @@ static void	add_list(t_all *all, t_point *point, int x)
 	list = all->list;
 	while (list->next)
 		list = list->next;
+	if (list->lenx != x)
+		return (1);
 	new = (t_lst *)malloc(sizeof(t_lst));
 	list->next = new;
 	new->lenx = x;
@@ -15,6 +17,7 @@ static void	add_list(t_all *all, t_point *point, int x)
 	new->prev = list;
 	new->point = point;
 	new->leny = 0;
+	return (0);
 }
 
 static int	check_hex(char *line)
@@ -52,13 +55,14 @@ int			get_data(t_all *all, char *line, int y, int len)
 	while (i < len && line[i])
 	{
 		z = ft_atoi(&line[i]);
+		if (line[i] == '+')
+			i++;
 		i += ft_intlen((ssize_t)z);
-		// printf("line[i] = !%c!\n", line[i]);
 		if (line[i] == ',')
 		{
 			if (check_hex(&line[++i]))
 				return (1);
-			while (line[i] != ' ')
+			while (i < len && line[i] != ' ')
 				i++;
 		}
 		if (!point)
@@ -66,8 +70,12 @@ int			get_data(t_all *all, char *line, int y, int len)
 		else
 			point_add(point, y, z);
 		x++;
-		while (line[i] == ' ')
+		while (i < len && (line[i] < '0' || line[i] > '9') && line[i] != '-')
+		{
+			if (line[i] != ' ')
+				return (1);
 			i++;
+		}
 	}
 	if (!all->list)
 	{
@@ -78,7 +86,10 @@ int			get_data(t_all *all, char *line, int y, int len)
 		all->list->lenx = x;
 	}
 	else
-		add_list(all, point, x);
+	{
+		if (add_list(all, point, x))
+			return (1);
+	}
 	return (0);
 }
 
